@@ -1,0 +1,38 @@
+import { Route, Routes } from "react-router-dom";
+import NavbarComponent from "./components/NavbarComponent";
+import ProtectedRoute from "./components/ProtectedRoute";
+import CategoryPage from "./pages/public/CategoryPage";
+import HomePage from "./pages/public/HomePage";
+import LoginPage from "./pages/public/LoginPage";
+import MostReadPage from "./pages/public/MostReadPage";
+import NewsDetailsPage from "./pages/public/NewsDetailsPage";
+import SearchNewsPage from "./pages/public/SearchNewsPage";
+import TagNewsPageShow from "./pages/public/TagNewsPageShow";
+
+function App() {
+  return (
+    <div>
+      <NavbarComponent />
+      <main className="container mx-auto px-4 py-8">
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/most-read" element={<MostReadPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/category/:id" element={<CategoryPage />} />
+          <Route
+            path="/search"
+            element={
+              <ProtectedRoute>
+                <SearchNewsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/news/:id" element={<NewsDetailsPage />} />
+          <Route path="/tag/:id" element={<TagNewsPageShow />} />
+        </Routes>
+      </main>
+    </div>
+  );
+}
+
+export default App;

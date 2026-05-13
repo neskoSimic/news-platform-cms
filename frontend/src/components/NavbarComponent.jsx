@@ -1,0 +1,55 @@
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import NavBarCategoriesComponent from "./NavBarCategoriesComponent";
+import SearchbarComponent from "./SearchbarComponent";
+
+function NavbarComponent() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    logout();
+    navigate("/");
+  }
+
+  return (
+    <nav className="bg-gray-800 p-4">
+      <div className="container mx-auto flex items-center justify-between">
+        <div className="text-white text-lg font-bold">News Site</div>
+        <div className="space-x-4">
+          <Link to="/" className="text-gray-300 hover:text-white">
+            Home
+          </Link>
+          <Link to="/most-read" className="text-gray-300 hover:text-white">
+            Most-read
+          </Link>
+
+          <NavBarCategoriesComponent />
+        </div>
+
+        <div>
+          <SearchbarComponent />
+        </div>
+
+        <div>
+          {user ? (
+            <div className="flex items-center space-x-4">
+              <span className="text-gray-300">
+                Welcome, {user.first_name} {user.last_name}
+              </span>
+              <button onClick={handleLogout}> Logout</button>
+            </div>
+          ) : (
+            <div className="space-x-4">
+              <Link to="/login" className="text-gray-300 hover:text-white">
+                Login
+              </Link>
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+export default NavbarComponent;
