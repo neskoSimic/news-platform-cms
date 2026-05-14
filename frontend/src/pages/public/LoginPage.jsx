@@ -50,7 +50,7 @@ function LoginPage() {
 
       toast.success(data.message);
 
-      navigate("/");
+      navigate("/categories");
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
     }

@@ -46,7 +46,7 @@ export function AuthProvider({ children }) {
         token,
         login,
         logout,
-        isAuthenticated: token ? true : false,
+        isAuthenticated: Boolean(token && user),
       }}
     >
       {children}

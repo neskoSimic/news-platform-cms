@@ -5,7 +5,7 @@ const reactToNews = async (req, res) => {
   try {
     const { newsId } = req.params;
     const { reaction } = req.body;
-    const sessionId = req.sessionId;
+    const sessionId = req.sessionID;
 
     if (!["like", "dislike"].includes(reaction)) {
       return res.status(400).json({ message: "Invalid reaction type" });

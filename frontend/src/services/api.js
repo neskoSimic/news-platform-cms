@@ -1,8 +1,8 @@
 import axios from "axios";
 const BASE_URL = "http://localhost:3001";
-const token = localStorage.getItem("token");
 
 export async function searchNews(q, page, limit) {
+  const token = localStorage.getItem("token");
   const response = await axios.get(`${BASE_URL}/news/public/search`, {
     params: {
       q,
@@ -74,6 +74,40 @@ export async function getNewsByTagId(id, page, limit) {
 }
 export async function getTopReactedNews() {
   const response = await axios.get(`${BASE_URL}/news/public/top-reacted`);
+
+  return response.data;
+}
+
+export async function addCommentToNews(commentData) {
+  const response = await axios.post(`${BASE_URL}/comments`, commentData);
+
+  return response.data;
+}
+
+export async function reactToNews(id, type) {
+  const response = await axios.post(
+    `${BASE_URL}/reactions/news/${id}`,
+    {
+      reaction: type,
+    },
+    {
+      withCredentials: true,
+    },
+  );
+
+  return response.data;
+}
+
+export async function reactToComment(id, type) {
+  const response = await axios.post(
+    `${BASE_URL}/reactions/comment/${id}`,
+    {
+      reaction_type: type,
+    },
+    {
+      withCredentials: true,
+    },
+  );
 
   return response.data;
 }

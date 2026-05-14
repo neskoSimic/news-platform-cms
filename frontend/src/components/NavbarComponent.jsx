@@ -15,38 +15,64 @@ function NavbarComponent() {
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex items-center justify-between">
-        <div className="text-white text-lg font-bold">News Site</div>
-        <div className="space-x-4">
-          <Link to="/" className="text-gray-300 hover:text-white">
-            Home
-          </Link>
-          <Link to="/most-read" className="text-gray-300 hover:text-white">
-            Most-read
-          </Link>
+        <div className="text-lg font-bold text-white">News Site</div>
 
-          <NavBarCategoriesComponent />
-        </div>
+        {!user ? (
+          <>
+            {/* GUEST NAVBAR */}
+            <div className="space-x-4">
+              <Link to="/" className="text-gray-300 hover:text-white">
+                Home
+              </Link>
 
-        <div>
-          <SearchbarComponent />
-        </div>
+              <Link to="/most-read" className="text-gray-300 hover:text-white">
+                Most-read
+              </Link>
 
-        <div>
-          {user ? (
-            <div className="flex items-center space-x-4">
-              <span className="text-gray-300">
-                Welcome, {user.first_name} {user.last_name}
-              </span>
-              <button onClick={handleLogout}> Logout</button>
+              <NavBarCategoriesComponent />
             </div>
-          ) : (
+
+            <div>
+              <SearchbarComponent />
+            </div>
+
             <div className="space-x-4">
               <Link to="/login" className="text-gray-300 hover:text-white">
                 Login
               </Link>
             </div>
-          )}
-        </div>
+          </>
+        ) : (
+          <>
+            {/* LOGGED USER NAVBAR */}
+            <div className="space-x-4">
+              <Link to="/categories" className="text-gray-300 hover:text-white">
+                Categories
+              </Link>
+
+              <Link to="/news" className="text-gray-300 hover:text-white">
+                News
+              </Link>
+            </div>
+
+            <div>
+              <SearchbarComponent />
+            </div>
+
+            <div className="flex items-center space-x-4">
+              <span className="text-gray-300">
+                Welcome, {user.first_name} {user.last_name}
+              </span>
+
+              <button
+                onClick={handleLogout}
+                className="text-gray-300 hover:text-white"
+              >
+                Logout
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </nav>
   );
