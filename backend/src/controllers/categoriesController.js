@@ -25,6 +25,23 @@ const getAllCategories = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+const getAllCategoriesCms = async (req, res) => {
+  try {
+    const categoriesResult = await pool.query(
+      "SELECT * FROM categories ORDER BY created_at DESC",
+    );
+
+    res.status(200).json({
+      categories: categoriesResult.rows,
+    });
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
 
 const createCategory = async (req, res) => {
   try {
@@ -138,4 +155,5 @@ module.exports = {
   getCategoryById,
   updateCategory,
   deleteCategory,
+  getAllCategoriesCms,
 };

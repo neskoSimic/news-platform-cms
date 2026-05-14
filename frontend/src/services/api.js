@@ -111,37 +111,107 @@ export async function reactToComment(id, type) {
 
   return response.data;
 }
-/*
-export async function fetchNews() {
-  try {
-    const response = await fetch(`${BASE_URL}/news`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch news");
-    }
-    const data = await response.json();
-    return data.news;
-  } catch (error) {
-    console.error("Error fetching news:", error);
-    throw error;
-  }
+
+export async function getCategoriesCms(page, limit) {
+  const token = localStorage.getItem("token");
+  const response = await axios.get(`${BASE_URL}/categories`, {
+    params: {
+      page,
+      limit,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
 }
 
-export async function registerUser(username, email, password) {
-  try {
-    const response = await fetch(`${BASE_URL}/users`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, email, password }),
-    });
-    if (!response.ok) {
-      throw new Error("Failed to register user");
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Error registering user:", error);
-    throw error;
-  }
+export async function createCategory(body) {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.post(`${BASE_URL}/categories`, body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
 }
-  */
+
+export async function updateCategory(id, body) {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.patch(`${BASE_URL}/categories/${id}`, body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+}
+
+export async function deleteCategory(id) {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.delete(`${BASE_URL}/categories/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+}
+
+export async function getNewsCms(page, limit) {
+  const token = localStorage.getItem("token");
+  const response = await axios.get(`${BASE_URL}/news`, {
+    params: {
+      page,
+      limit,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function getCategoriesListCms() {
+  const response = await axios.get(`${BASE_URL}/categories/cms`);
+
+  return response.data;
+}
+export async function createNews(body) {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.post(`${BASE_URL}/news`, body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+}
+export async function updateNews(id, body) {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.patch(`${BASE_URL}/news/${id}`, body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+}
+
+export async function deleteNews(id) {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.delete(`${BASE_URL}/news/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+}

@@ -41,7 +41,7 @@ router.get("/public/:id", getPublicNewsDetails);
 //--------------------------------------------------------
 router.get("/:id", authMiddleware, requireRole("admin", "user"), getNewsById);
 router.post("/", authMiddleware, requireRole("admin", "user"), createNews);
-router.put("/:id", authMiddleware, requireRole("admin"), updateNews);
-router.delete("/:id", authMiddleware, requireRole("admin"), deleteNews);
+router.patch("/:id", authMiddleware, requireRole("admin", "user"), updateNews);
+router.delete("/:id", authMiddleware, requireRole("admin", "user"), deleteNews);
 
 module.exports = router;

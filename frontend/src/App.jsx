@@ -1,6 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import NavbarComponent from "./components/NavbarComponent";
 import ProtectedRoute from "./components/ProtectedRoute";
+import CategoriesPage from "./pages/cms/CategoriesPage";
+import NewsPage from "./pages/cms/NewsPage";
 import CategoryPage from "./pages/public/CategoryPage";
 import HomePage from "./pages/public/HomePage";
 import LoginPage from "./pages/public/LoginPage";
@@ -29,6 +31,8 @@ function App() {
           />
           <Route path="/news/:id" element={<NewsDetailsPage />} />
           <Route path="/tag/:id" element={<TagNewsPageShow />} />
+          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/news" element={<NewsPage />} />
         </Routes>
       </main>
     </div>

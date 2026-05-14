@@ -30,7 +30,7 @@ const getAllNews = async (req, res) => {
 
   try {
     const newsResult = await pool.query(
-      "SELECT news.id, news.title, news.text, news.published_at, news.visits, users.first_name, users.last_name, categories.name AS category_name FROM news JOIN users ON news.author_id = users.id JOIN categories ON news.category_id = categories.id ORDER BY news.published_at DESC LIMIT $1 OFFSET $2",
+      "SELECT news.id, news.title, news.text, news.category_id, news.published_at, news.author_id, news.visits, users.first_name, users.last_name, categories.name AS category_name FROM news JOIN users ON news.author_id = users.id JOIN categories ON news.category_id = categories.id ORDER BY news.published_at DESC LIMIT $1 OFFSET $2",
       [limit, offset],
     );
 
@@ -107,7 +107,10 @@ const createNews = async (req, res) => {
     const newsId = result.rows[0].id;
     await addTagsToNews(newsId, tags); //prolazim kroz citavu listu tagova i ubacujem sa ovom vijesti
 
-    res.status(201).json(result.rows[0]);
+    res.status(201).json({
+      message: "News created successfully",
+      news: result.rows[0],
+    });
   } catch (error) {
     console.error("Error creating news:", error);
     res.status(500).json({ message: "Internal server error" });

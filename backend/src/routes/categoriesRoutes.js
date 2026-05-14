@@ -7,11 +7,13 @@ const {
   getCategoryById,
   updateCategory,
   deleteCategory,
+  getAllCategoriesCms,
 } = require("../controllers/categoriesController");
 const authMiddleware = require("../middlewares/authMiddleware");
 const requireRole = require("../middlewares/roleMiddleware");
 
 router.get("/public", getAllCategories);
+router.get("/cms", getAllCategoriesCms);
 router.get("/", authMiddleware, requireRole("admin", "user"), getAllCategories);
 router.post("/", authMiddleware, requireRole("admin", "user"), createCategory);
 router.get(
@@ -20,7 +22,7 @@ router.get(
   requireRole("admin", "user"),
   getCategoryById,
 );
-router.put(
+router.patch(
   "/:id",
   authMiddleware,
   requireRole("admin", "user"),
