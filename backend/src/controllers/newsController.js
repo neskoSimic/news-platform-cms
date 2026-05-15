@@ -109,7 +109,7 @@ const getNewsById = async (req, res) => {
 const createNews = async (req, res) => {
   try {
     const { title, text, category_id, tags } = req.body;
-    const author_id = req.user.userId;
+    const author_id = req.user.id;
 
     if (
       !title ||
@@ -153,7 +153,7 @@ const updateNews = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, text, category_id, tags } = req.body;
-    const author_id = req.user.userId;
+    const author_id = req.user.id;
 
     const newsResult = await pool.query("SELECT * FROM news WHERE id = $1", [
       id,
@@ -219,7 +219,7 @@ const getNewsByTag = async (req, res) => {
 const deleteNews = async (req, res) => {
   try {
     const { id } = req.params;
-    const author_id = req.user.userId;
+    const author_id = req.user.id;
 
     const newsResult = await pool.query("SELECT * FROM news WHERE id = $1", [
       id,
