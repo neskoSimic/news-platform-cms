@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import PaginationComponent from "../../components/PaginationComponent";
 import TableComponent from "../../components/TableComponent";
@@ -89,7 +89,11 @@ function NewsPage() {
   const columns = [
     {
       header: "Title",
-      render: (news) => news.title,
+      render: (news) => (
+        <Link to={`/news/${news.id}`} className="text-blue-600 hover:underline">
+          {news.title}
+        </Link>
+      ),
     },
     {
       header: "Author",

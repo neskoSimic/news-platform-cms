@@ -16,6 +16,7 @@ const {
   searchPublicNews,
   getPublicNewsDetails,
   getTopReactedNews,
+  getAllNewsByCategory,
 } = require("../controllers/newsController");
 
 const authMiddleware = require("../middlewares/authMiddleware");
@@ -28,6 +29,12 @@ router.get(
   authMiddleware,
   requireRole("admin", "user"),
   getNewsByTag,
+);
+router.get(
+  "/category/:id",
+  authMiddleware,
+  requireRole("admin", "user"),
+  getAllNewsByCategory,
 );
 //public endpointi----------------------------------------
 router.get("/public/latest", getLatestNews);

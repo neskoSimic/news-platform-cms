@@ -2,11 +2,32 @@ import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext(null);
 
+function isTokenExpired(token) {
+  if (!token) return true;
+
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+
+    return payload.exp * 1000 < Date.now();
+  } catch (error) {
+    return true;
+  }
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem("user");
+    const savedToken = localStorage.getItem("token");
 
-    if (!savedUser || savedUser === "undefined") {
+    if (
+      !savedUser ||
+      savedUser === "undefined" ||
+      !savedToken ||
+      isTokenExpired(savedToken)
+    ) {
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+
       return null;
     }
 
@@ -14,11 +35,24 @@ export function AuthProvider({ children }) {
       return JSON.parse(savedUser);
     } catch (error) {
       localStorage.removeItem("user");
+      localStorage.removeItem("token");
+
       return null;
     }
   });
 
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [token, setToken] = useState(() => {
+    const savedToken = localStorage.getItem("token");
+
+    if (!savedToken || isTokenExpired(savedToken)) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      return null;
+    }
+
+    return savedToken;
+  });
 
   function login(userData, token) {
     if (!userData) {

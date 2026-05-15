@@ -26,11 +26,10 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    console.log("Login request received with body:", req.body);
     const { email, password } = req.body;
 
     const result = await pool.query(
-      "SELECT id, email, first_name, last_name, password_hash, user_type FROM users WHERE email = $1",
+      "SELECT id, email, first_name, last_name, password_hash, user_type, status FROM users WHERE email = $1",
       [email],
     );
 
@@ -43,6 +42,12 @@ const login = async (req, res) => {
 
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    if (user.user_type === "user" && user.status === "inactive") {
+      return res.status(403).json({
+        message: "Your account is inactive",
+      });
     }
 
     const token = jwt.sign(

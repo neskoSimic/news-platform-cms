@@ -58,7 +58,6 @@ function UserPage() {
   }
   function handleAdd() {
     setEnabled((prev) => !prev);
-    setEditingUsers(null);
   }
 
   function handleEdit(users) {

@@ -45,6 +45,7 @@ const getUserById = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
+  const bcrypt = require("bcrypt");
   try {
     const {
       email,
@@ -75,7 +76,7 @@ const createUser = async (req, res) => {
     if (password != confirm_password) {
       return res.status(400).json({ message: "Passwords do not match" });
     }
-    if (user_type !== "admin" && user_type !== "regular") {
+    if (user_type !== "admin" && user_type !== "user") {
       return res.status(400).json({ message: "Invalid user type" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -109,12 +110,10 @@ const updateUser = async (req, res) => {
       !first_name ||
       !last_name ||
       !user_type ||
-      !status ||
       email.trim() === "" ||
       first_name.trim() === "" ||
       last_name.trim() === "" ||
-      user_type.trim() === "" ||
-      status.trim() === ""
+      user_type.trim() === ""
     ) {
       return res
         .status(400)
@@ -124,8 +123,8 @@ const updateUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid user type" });
     }
     const result = await pool.query(
-      "UPDATE users SET email = $1, first_name = $2, last_name = $3, user_type = $4, status = $5 WHERE id = $6 RETURNING id, email",
-      [email, first_name, last_name, user_type, status, id],
+      "UPDATE users SET email = $1, first_name = $2, last_name = $3, user_type = $4 WHERE id = $5 RETURNING id, email",
+      [email, first_name, last_name, user_type, id],
     );
     if (result.rows.length === 0) {
       return res.status(404).json({ message: "User not found" });
