@@ -16,24 +16,24 @@ function HomePage() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-10">
-        <h1 className="mb-3 text-4xl font-extrabold tracking-tight text-gray-900">
-          Latest News & Updates
+    <div>
+      <header className="mb-8">
+        <h1 className="font-display text-3xl tracking-tight text-ink-50 md:text-4xl">
+          Latest news
         </h1>
-
-        <p className="max-w-2xl text-lg leading-7 text-gray-600">
-          Stay informed with the latest stories from sports, technology, gaming,
-          business, and world events. Browse the 10 most recently published news
-          articles from our platform.
+        <p className="mt-1 text-sm text-ink-400">
+          The most recently published stories.
         </p>
-      </div>
+      </header>
 
-      <div>
-        <NewsListComponent news={news} />
-      </div>
-      <div>
-        <TopReactedNewsSidebar />
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <section>
+          <NewsListComponent news={news} />
+        </section>
+
+        <aside className="lg:order-last">
+          <TopReactedNewsSidebar />
+        </aside>
       </div>
     </div>
   );

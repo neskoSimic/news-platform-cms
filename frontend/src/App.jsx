@@ -14,9 +14,9 @@ import TagNewsPageShow from "./pages/public/TagNewsPageShow";
 
 function App() {
   return (
-    <div>
+    <div className="min-h-screen bg-ink-950 text-ink-50">
       <NavbarComponent />
-      <main className="container mx-auto px-4 py-8">
+      <main className="mx-auto w-full max-w-[1400px] px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/most-read" element={<MostReadPage />} />
@@ -38,6 +38,11 @@ function App() {
           <Route path="/users" element={<UsersPage />} />
         </Routes>
       </main>
+      <footer className="mt-12 border-t border-ink-750/60 py-6 text-center text-xs uppercase tracking-[0.2em] text-ink-400">
+        <span className="font-display italic text-ink-300">Obsidian</span>
+        <span className="mx-3 text-ink-600">·</span>
+        Editorial News Platform
+      </footer>
     </div>
   );
 }

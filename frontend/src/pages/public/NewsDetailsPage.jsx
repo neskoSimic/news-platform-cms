@@ -60,8 +60,8 @@ function NewsDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 px-4 py-10">
-      <div className="mx-auto flex max-w-4xl flex-col gap-8">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <div className="space-y-8">
         <NewsCardComponent
           news={{ ...news, tags, relatedNews, comments }}
           reactToNews={handleReactToNews}
@@ -69,9 +69,11 @@ function NewsDetailsPage() {
         />
 
         <NewsCommentComponent onAddComment={handleAddComment} />
-
-        <TopReactedNewsSidebar />
       </div>
+
+      <aside className="lg:order-last">
+        <TopReactedNewsSidebar />
+      </aside>
     </div>
   );
 }

@@ -4,26 +4,62 @@ function PaginationComponent({ currentPage, totalPages, onPageChange }) {
     pageNumbers.push(i);
   }
 
+  const isFirst = currentPage === 1;
+  const isLast = currentPage === totalPages;
+
   return (
-    <div className="flex justify-center mt-4">
+    <nav
+      aria-label="Pagination"
+      className="mt-6 flex items-center justify-center gap-2"
+    >
       <button
         onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="px-3 py-1 mx-1 bg-gray-300 rounded disabled:opacity-50"
+        disabled={isFirst}
+        className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-ink-750 bg-ink-850 px-3 text-sm font-medium text-ink-200 transition-all duration-200 hover:border-amber-accent/40 hover:bg-ink-800 hover:text-amber-accent disabled:pointer-events-none disabled:opacity-40"
       >
-        Previous
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+        Prev
       </button>
-      <span className="px-3 py-1 mx-1">
-        Page {currentPage} of {totalPages}
-      </span>
+
+      <div className="inline-flex h-9 items-center gap-2 rounded-lg border border-ink-750 bg-ink-900/60 px-4 font-mono text-sm tabular text-ink-100">
+        <span className="font-semibold text-amber-accent">{currentPage}</span>
+        <span className="text-ink-500">/</span>
+        <span className="text-ink-300">{totalPages}</span>
+      </div>
+
       <button
         onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="px-3 py-1 mx-1 bg-gray-300 rounded disabled:opacity-50"
+        disabled={isLast}
+        className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-ink-750 bg-ink-850 px-3 text-sm font-medium text-ink-200 transition-all duration-200 hover:border-amber-accent/40 hover:bg-ink-800 hover:text-amber-accent disabled:pointer-events-none disabled:opacity-40"
       >
         Next
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m9 18 6-6-6-6" />
+        </svg>
       </button>
-    </div>
+    </nav>
   );
 }
 

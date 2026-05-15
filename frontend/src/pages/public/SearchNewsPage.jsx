@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import NewsListComponent from "../../components/news/NewsListComponent";
+import TopReactedNewsSidebar from "../../components/news/TopReactedNewsSidebar";
 import PaginationComponent from "../../components/PaginationComponent";
 import { searchNews } from "../../services/api";
 
@@ -53,17 +54,37 @@ function SearchNewsPage() {
 
   return (
     <div>
-      <h1 className="mb-4 text-2xl font-bold">Search results: {q}</h1>
+      <header className="mb-10 border-b border-ink-750/70 pb-8">
+        <p className="mb-3 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-amber-accent">
+          <span className="h-px w-8 bg-amber-accent/60" />
+          Search results
+          <span className="ml-2 rounded-full bg-ink-800 px-2 py-0.5 font-mono text-[11px] tabular text-ink-200">
+            {total}
+          </span>
+        </p>
+        <h1 className="font-display text-4xl leading-tight text-ink-50 md:text-5xl">
+          Showing matches for{" "}
+          <em className="text-amber-accent">&ldquo;{q}&rdquo;</em>
+        </h1>
+      </header>
 
-      <NewsListComponent news={news} />
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <section>
+          <NewsListComponent news={news} />
 
-      {totalPages > 0 && (
-        <PaginationComponent
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={handleChangePage}
-        />
-      )}
+          {totalPages > 0 && (
+            <PaginationComponent
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={handleChangePage}
+            />
+          )}
+        </section>
+
+        <aside className="lg:order-last">
+          <TopReactedNewsSidebar />
+        </aside>
+      </div>
     </div>
   );
 }

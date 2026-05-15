@@ -10,7 +10,19 @@ createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <AuthProvider>
         <App />
-        <Toaster richColors position="bottom-right" />
+        <Toaster
+          richColors
+          theme="dark"
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              background: "#13131a",
+              border: "1px solid #2e303a",
+              color: "#ededf0",
+              fontFamily: "Manrope, ui-sans-serif, system-ui, sans-serif",
+            },
+          }}
+        />
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>,

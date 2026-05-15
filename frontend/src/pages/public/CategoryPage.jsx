@@ -42,20 +42,35 @@ function CategoryPage() {
 
   return (
     <div>
-      <h1 className="mb-4 text-2xl font-bold">Category news</h1>
+      <header className="mb-10 border-b border-ink-750/70 pb-8">
+        <p className="mb-3 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-amber-accent">
+          <span className="h-px w-8 bg-amber-accent/60" />
+          Category
+        </p>
+        <h1 className="font-display text-5xl leading-[1.05] tracking-tight text-ink-50">
+          Category news
+        </h1>
+        <p className="mt-3 max-w-2xl text-base leading-7 text-ink-300">
+          Explore the freshest reporting in this section, organized by recency.
+        </p>
+      </header>
 
-      <NewsListComponent news={news} />
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <section>
+          <NewsListComponent news={news} />
 
-      {totalPages > 0 && (
-        <PaginationComponent
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={handleChangePage}
-        />
-      )}
+          {totalPages > 0 && (
+            <PaginationComponent
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={handleChangePage}
+            />
+          )}
+        </section>
 
-      <div>
-        <TopReactedNewsSidebar />
+        <aside className="lg:order-last">
+          <TopReactedNewsSidebar />
+        </aside>
       </div>
     </div>
   );

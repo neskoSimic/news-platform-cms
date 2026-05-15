@@ -6,9 +6,10 @@ function NewsTagsCardComponent({ tags }) {
         <Link
           key={tag.id}
           to={`/tag/${tag.id}`}
-          className="rounded-full bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-700 no-underline hover:bg-blue-100"
+          className="inline-flex items-center gap-1 rounded-full border border-ink-750 bg-ink-900/60 px-3 py-1 font-mono text-xs lowercase tracking-wide text-ink-200 transition-all duration-200 hover:border-amber-accent/50 hover:bg-amber-soft hover:text-amber-accent"
         >
-          #{tag.name}
+          <span className="text-amber-accent">#</span>
+          {tag.name}
         </Link>
       ))}
     </div>

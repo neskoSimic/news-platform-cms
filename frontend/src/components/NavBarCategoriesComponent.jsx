@@ -21,17 +21,17 @@ function NavBarCategoriesComponent() {
   }, []);
 
   return (
-    <>
+    <div className="flex flex-wrap items-center gap-1">
       {categories.map((category) => (
         <Link
           key={category.id}
           to={`/category/${category.id}`}
-          className="text-gray-300 hover:text-white"
+          className="rounded-md px-2.5 py-1.5 text-sm font-medium text-ink-300 transition-colors duration-200 hover:bg-ink-800 hover:text-amber-accent"
         >
           {category.name}
         </Link>
       ))}
-    </>
+    </div>
   );
 }
 
