@@ -215,3 +215,70 @@ export async function deleteNews(id) {
 
   return response.data;
 }
+
+/**---------------------admin api */
+export async function getAllUsers(page, limit) {
+  const token = localStorage.getItem("token");
+  const response = await axios.get(`${BASE_URL}/users`, {
+    params: {
+      page,
+      limit,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+}
+
+export async function createUser(body) {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.post(`${BASE_URL}/users`, body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+}
+
+export async function updateUser(id, body) {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.patch(`${BASE_URL}/users/${id}`, body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+}
+
+export async function toggleStatus(id) {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.patch(
+    `${BASE_URL}/users/${id}/status`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  return response.data;
+}
+
+export async function getAllNewsByCategory(id, page, limit) {
+  const response = await axios.get(`${BASE_URL}/news/public/category/${id}`, {
+    params: {
+      page,
+      limit,
+    },
+  });
+
+  return response.data;
+}

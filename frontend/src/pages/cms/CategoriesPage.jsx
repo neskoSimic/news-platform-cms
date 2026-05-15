@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import PaginationComponent from "../../components/PaginationComponent";
 import TableComponent from "../../components/TableComponent";
@@ -26,7 +26,7 @@ function CategoriesPage() {
   const [totalPages, setTotalPages] = useState(1);
   let response;
 
-  async function fetchCategories() {
+  async function fetchCategories(page, limit) {
     const data = await getCategoriesCms(page, limit);
 
     setCategorise(data.categories);
@@ -34,7 +34,7 @@ function CategoriesPage() {
   }
 
   useEffect(() => {
-    fetchCategories();
+    fetchCategories(page, limit);
   }, [page]);
 
   function handleChangePage(newPage) {
@@ -50,7 +50,14 @@ function CategoriesPage() {
   const columns = [
     {
       header: "Name",
-      render: (category) => category.name,
+      render: (category) => (
+        <Link
+          to={`/news/category/${category.id}`}
+          className="text-blue-600 hover:underline"
+        >
+          {category.name}
+        </Link>
+      ),
     },
     {
       header: "Description",

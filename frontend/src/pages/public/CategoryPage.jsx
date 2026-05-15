@@ -22,7 +22,6 @@ function CategoryPage() {
   useEffect(() => {
     async function fetchCategoryNews() {
       const data = await getNewsByCategoryHome(id, page, limit);
-      console.log("DATA:", data);
 
       setNews(data.news);
       setTotal(data.total);

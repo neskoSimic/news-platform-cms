@@ -54,6 +54,13 @@ function NavbarComponent() {
                 News
               </Link>
             </div>
+            {user.user_type === "admin" && (
+              <div className="space-x-4">
+                <Link to="/users" className="text-gray-300 hover:text-white">
+                  Users
+                </Link>
+              </div>
+            )}
 
             <div>
               <SearchbarComponent />

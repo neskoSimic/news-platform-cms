@@ -3,6 +3,7 @@ import NavbarComponent from "./components/NavbarComponent";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CategoriesPage from "./pages/cms/CategoriesPage";
 import NewsPage from "./pages/cms/NewsPage";
+import UsersPage from "./pages/cms/UsersPage";
 import CategoryPage from "./pages/public/CategoryPage";
 import HomePage from "./pages/public/HomePage";
 import LoginPage from "./pages/public/LoginPage";
@@ -33,6 +34,8 @@ function App() {
           <Route path="/tag/:id" element={<TagNewsPageShow />} />
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/news" element={<NewsPage />} />
+          <Route path="/news/category/:id" element={<NewsPage />} />
+          <Route path="/users" element={<UsersPage />} />
         </Routes>
       </main>
     </div>

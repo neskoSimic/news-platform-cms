@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import PaginationComponent from "../../components/PaginationComponent";
 import TableComponent from "../../components/TableComponent";
@@ -8,6 +8,7 @@ import { newsSchema } from "../../schemas/newsSchema";
 import {
   createNews,
   deleteNews,
+  getAllNewsByCategory,
   getCategoriesListCms,
   getNewsCms,
   getNewsDetailsById,
@@ -19,6 +20,8 @@ function NewsPage() {
 
   const userId = user?.id;
   const userType = user?.user_type;
+
+  const { id } = useParams();
 
   const [news, setNews] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,7 +38,7 @@ function NewsPage() {
   const [tags, setTags] = useState("");
   const [editingNews, setEditingNews] = useState(null);
 
-  async function fetchNews() {
+  async function fetchNews(page, limit) {
     const data = await getNewsCms(page, limit);
     const data2 = await getCategoriesListCms();
 
@@ -48,9 +51,30 @@ function NewsPage() {
     setTags(data.tags.map((tag) => tag.name).join(", "));
   }
 
+  async function fetchNewsByCategory(id, page, limit) {
+    const data = await getAllNewsByCategory(id, page, limit);
+    const data2 = await getCategoriesListCms();
+
+    setNews(data.news);
+    setTotalPages(data.totalPages);
+    setCategories(data2.categories);
+  }
+
   useEffect(() => {
-    fetchNews();
-  }, [page]);
+    async function loadNews() {
+      try {
+        if (id) {
+          await fetchNewsByCategory(id, page, limit);
+        } else {
+          await fetchNews(page, limit);
+        }
+      } catch (error) {
+        toast.error(error.response?.data?.message || "Failed to fetch news");
+      }
+    }
+
+    loadNews();
+  }, [page, id]);
 
   function handleChangePage(newPage) {
     if (newPage < 1 || newPage > totalPages) {
@@ -116,7 +140,11 @@ function NewsPage() {
     try {
       response = await deleteNews(news.id);
       toast.success(response.message);
-      fetchNews();
+      if (id) {
+        await fetchNewsByCategory(id, page, limit);
+      } else {
+        await fetchNews(page, limit);
+      }
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");
     }
@@ -161,13 +189,14 @@ function NewsPage() {
       setText("");
       setCategoryId("");
       setTags("");
-      fetchNews();
+      if (id) {
+        await fetchNewsByCategory(id, page, limit);
+      } else {
+        await fetchNews(page, limit);
+      }
 
       setEditingNews(null);
     } catch (error) {
-      console.log("STATUS:", error.response?.status);
-      console.log("DATA:", error.response?.data);
-      console.log("ERROR:", error);
       toast.error(error.response?.data?.message || "Something went wrong");
     }
   }
