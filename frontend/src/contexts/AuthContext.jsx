@@ -10,6 +10,7 @@ function isTokenExpired(token) {
 
     return payload.exp * 1000 < Date.now();
   } catch (error) {
+    error("Failed to decode token:", error);
     return true;
   }
 }
@@ -33,7 +34,8 @@ export function AuthProvider({ children }) {
 
     try {
       return JSON.parse(savedUser);
-    } catch (error) {
+    } catch (error) {      
+      console.error("Failed to parse user data:", error);
       localStorage.removeItem("user");
       localStorage.removeItem("token");
 

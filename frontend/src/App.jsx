@@ -32,10 +32,23 @@ function App() {
           />
           <Route path="/news/:id" element={<NewsDetailsPage />} />
           <Route path="/tag/:id" element={<TagNewsPageShow />} />
-          <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/news" element={<NewsPage />} />
+          <Route path="/categories" element={
+            <ProtectedRoute>
+              <CategoriesPage />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="/news" element={
+            <ProtectedRoute>
+              <NewsPage />
+            </ProtectedRoute>
+          } />
           <Route path="/news/category/:id" element={<NewsPage />} />
-          <Route path="/users" element={<UsersPage />} />
+          <Route path="/users" element={
+            <ProtectedRoute>
+              <UsersPage />
+            </ProtectedRoute>
+          } />
         </Routes>
       </main>
       <footer className="mt-12 border-t border-ink-750/60 py-6 text-center text-xs uppercase tracking-[0.2em] text-ink-400">
